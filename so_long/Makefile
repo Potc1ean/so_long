@@ -1,77 +1,67 @@
-NAME		=	so_long
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/24 04:13:09 by ichpakov          #+#    #+#              #
+#    Updated: 2024/04/24 04:13:10 by ichpakov         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC			=	clang
+.PHONY: all clean fclean re make norm
 
-FLAG		=	-Wall -Wextra -Werror -g
+NAME = so_long
+LIBFT = libft/libft.a
+LIBMLX = mlx/libmlx.a
 
-LIBFT_PATH	=	./libft/
+#//////////////////////////////////////////////////////////////////////////////
+#		ALL FILES
+#//////////////////////////////////////////////////////////////////////////////
 
-LIBFT_FILE	=	libft.a
+SRCS =	sl_src/so_long.c			sl_src/sl_game_loop.c	\
+		sl_src/sl_solve_problems.c	sl_src/sl_utils.c
 
-MLX_FILE	=	libmlx.a
+HEAD =	sl_inc/so_long.h			sl_inc/sl_keys.h
 
-LIBFT_LIB	=	$(addprefix $(LIBFT_PATH), $(LIBFT_FILE))
+#//////////////////////////////////////////////////////////////////////////////
+#		COMMAND SHORTCUTS
+#//////////////////////////////////////////////////////////////////////////////
 
-MLX_FLAG	=	-Imlx
+CC = gcc
+CF = -Wall -Werror -Wextra
+SL = -framework OpenGL -framework AppKit
+CI = -I sl_inc/
 
-MLX_PATH	=	./minilibx_opengl/
+AR = ar rcs
+RM = rm -rf
 
-MLX_LIB		=	$(addprefix $(MLX_PATH), $(MLX_FILE))
+#//////////////////////////////////////////////////////////////////////////////
+#		RULES
+#//////////////////////////////////////////////////////////////////////////////
 
-MLX_EX		=	$(MLX_LIB) $(MLX_FLAG)
+all: ${NAME}
 
-C_FILE		=	map.c				\
-				map_checker.c		\
-				render.c			\
-				render_mouv.c		\
-				set.c				\
-				main.c			\
-				utils.c				\
+# Binary creation
 
-SRC_DIR		=	./src/
+${NAME}: ${SRCS} ${HEAD} ${LIBFT} ${LIBMLX}
+	${CC} ${CF} ${CI} ${SL} ${SRCS} ${LIBFT} ${LIBMLX} -o ${NAME}
 
-INC_DIR		=	./includes/
+${LIBFT}:
+	make -C libft/
 
-SRC			=	$(addprefix $(SRC_DIR),$(C_FILE))
+${LIBMLX}:
+	make -C mlx/
 
-OBJ			=	$(SRC:.c=.o)
-
-%.o: %.c
-	$(CC) $(FLAG) $(MLX_FLAG) -c $< -o $@
-
-all: $(NAME)
-
-lib:
-	@echo "\033[0;33m\nCOMPILING $(LIBFT_PATH)\n"
-	@make -C $(LIBFT_PATH)
-	@echo "\033[1;32mLIBFT_lib created\n"
-
-mlx:
-	@echo "\033[0;33m\nCOMPILING $(MLX_PATH)...\n"
-	@make -sC $(MLX_PATH)
-	@echo "\033[1;32mMLX_lib created\n"
-
-$(NAME): lib mlx $(OBJ)
-	@echo "\033[0;33m\nCOMPILING SO_LONG...\n"
-	$(CC) $(OBJ) $(LIBFT_LIB) libmlx.dylib -framework OpenGL -framework AppKit -o $(NAME)
-	@echo "\033[1;32m./so_long created\n"
+# Mandatory rules
 
 clean:
-	@echo "\033[0;31mDeleting Obj file in $(MLX_PATH)...\n"
-	@make clean -sC $(MLX_PATH)
-	@echo "\033[0;31mDeleting Obj file in $(LIBFT_PATH)...\n"
-	@make clean -sC $(LIBFT_PATH)
-	@echo "\033[1;32mDone\n"
-	@echo "\033[0;31mDeleting So_long object...\n"
-	@rm -f $(OBJ)
-	@echo "\033[1;32mDone\n"
+	${RM}
 
 fclean: clean
-	@echo "\033[0;31mDeleting so_long executable..."
-	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_PATH)
-	@echo "\033[1;32mDone\n"
+	${RM} ${NAME}
+	make fclean -C libft/
+	make clean -C mlx/
 
 re: fclean all
-
-.PHONY: all clean fclean re
