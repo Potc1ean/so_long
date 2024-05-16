@@ -6,7 +6,7 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 05:28:12 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 21:59:07 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:11:48 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,12 @@ static char	*sl_init_map(char *av, t_prog *mlx)
 		sl_err2(20);
 		return (NULL);
 	}
-	mlx->map = sl_build_map(&*mlx, &vars);
+	mlx->map = sl_build_map(mlx, &vars);
 	close (mlx->fd);
 	if (!mlx->map)
-	{
-		sl_err2(21);
-		return(NULL);
-	}
-	if (!sl_check_map_error(&*mlx, &vars))
+		return (NULL);
+	if ((!sl_check_map_error(mlx, &vars))
+		|| (sl_floodfile(*mlx, &vars) == -1))
 	{
 		free (mlx->map);
 		return (NULL);
@@ -114,9 +112,7 @@ static void	sl_init_img(t_prog *mlx)
 int	main(int ac, char **av)
 {
 	t_prog	mlx;
-	int		rubis;
 
-	rubis = 0;
 	if (ac != 2)
 		return (sl_err1(1));
 	mlx.map = sl_init_map(av[1], &mlx);

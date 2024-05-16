@@ -6,60 +6,70 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 19:04:13 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 22:52:33 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:54:34 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sl_inc/so_long.h"
 
-int		sl_road_checker(int y, int x, t_prog *mlx, char **map)
+static	void	p_pos(int *x, int *y, char **map)
 {
-    int		a;
-    
-    a = 0;
-    if (y >= mlx->ynb || x >= mlx->xnb || y < 0 || x < 0
-        || map[y][x] == '1' || map[y][x] == '2')
-        return (0);
-        
-    else if (map[y][x] == 'E')
-        return (1);
-    else if (map[y][x] == 'C')
-        mlx->rubis++;
-    map[y][x] = '2';
-    a += sl_road_checker(y + 1, x, mlx, map);
-    a += sl_road_checker(y - 1, x, mlx, map);
-    a += sl_road_checker(y, x + 1, mlx, map);
-    a += sl_road_checker(y, x - 1, mlx, map);
-    
-    return (a);
-}
+	int	i;
+	int	j;
 
-int		floodfile(char **map, t_prog *mlx)
-{
-	int i;
-	int j;
-	int rubis;
-	char **map;
-	
 	i = 0;
 	j = 0;
-	rubis = 0;
-	map = ft_split(mlx->map, '\n');
-	while (map[i])
+	while (map[j])
 	{
-		while (map[i][j])
+		while (map[j][i])
 		{
-			if (map[i][j] == 'P')
-				break;
-			j++;
+			if (map[j][i] == 'P')
+			{
+				*y = j;
+				*x = i;
+			}
+			i++;
 		}
-		j = 0;
-		i++;
+		i = 0;
+		j++;
 	}
-	sl_road_checker(i, j, &rubis, mlx, map);
-	sl_solve_spmap(map);
 }
 
+static	int	checker(int y, int x, t_prog mlx, t_vstock *vars)
+{
+	int		a;
 
-go faire une struct qui a toutes les coordonnes des trucs dont on doit avoir l'access,puis on fait 
-une recurssive depuis le perso pour chaque coordonnees
+	a = 0;
+	if (y >= mlx.ynb || x >= mlx.xnb || y < 0 || x < 0
+		|| mlx.m_tmp[y][x] == '1' || mlx.m_tmp[y][x] == '2')
+		return (0);
+	else if (mlx.m_tmp[y][x] == 'C')
+		vars->itmp++;
+	else if (mlx.m_tmp[y][x] == 'E')
+		return (1);
+	mlx.m_tmp[y][x] = '2';
+	a += checker(y + 1, x, mlx, vars);
+	a += checker(y - 1, x, mlx, vars);
+	a += checker(y, x + 1, mlx, vars);
+	a += checker(y, x - 1, mlx, vars);
+	return (a);
+}
+
+int	sl_floodfile(t_prog mlx, t_vstock *vars)
+{
+	int		r;
+	int		rtn;
+
+	r = 0;
+	rtn = 0;
+	vars->itmp = 0;
+	mlx.m_tmp = ft_split(mlx.map, '\n');
+	p_pos(&mlx.x, &mlx.y, mlx.m_tmp);
+	r = checker(mlx.y, mlx.x, mlx, vars);
+	if (r < 1)
+		rtn = -1;
+	if (vars->itmp != vars->ccount)
+		rtn = -1;
+	sl_solve_spmap(mlx.m_tmp);
+	return (rtn);
+}

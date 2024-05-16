@@ -6,7 +6,7 @@
 #    By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 04:13:09 by ichpakov          #+#    #+#              #
-#    Updated: 2024/04/24 04:13:10 by ichpakov         ###   ########.fr        #
+#    Updated: 2024/05/15 16:27:59 by ichpakov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBMLX = mlx/libmlx.a
 #//////////////////////////////////////////////////////////////////////////////
 
 SRCS =	sl_src/so_long.c			sl_src/sl_game_loop.c	\
-		sl_src/sl_solve_problems.c	sl_src/sl_utils.c
+		sl_src/sl_solve_problems.c	sl_src/sl_utils.c		\
+		sl_src/sl_floodfile.c
 
 HEAD =	sl_inc/so_long.h			sl_inc/sl_keys.h
 
@@ -46,7 +47,7 @@ all: ${NAME}
 # Binary creation
 
 ${NAME}: ${SRCS} ${HEAD} ${LIBFT} ${LIBMLX}
-	${CC} ${CF} ${CI} ${SL} ${SRCS} ${LIBFT} ${LIBMLX} -o ${NAME}
+	${CC} ${CI} ${SL} ${SRCS} ${LIBFT} ${LIBMLX} -o ${NAME}
 
 ${LIBFT}:
 	make -C libft/

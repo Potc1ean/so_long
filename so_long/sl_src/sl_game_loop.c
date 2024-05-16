@@ -6,7 +6,7 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 05:23:47 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 22:18:28 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:05:46 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	sl_display_map(t_prog mlx)
 				mlx.x++ *32, mlx.y * 32);
 		else if (i == 5)
 		{
-			mlx.xnb = mlx.x;
 			mlx.x = 0;
 			mlx.y++;
 		}
@@ -120,6 +119,6 @@ static int	sl_hub_keypress(int key, t_prog *mlx)
 void	sl_game_loop(t_prog *mlx)
 {
 	sl_display_map(*mlx);
-	mlx_hook(mlx->win, 2, 0, sl_hub_keypress, &*mlx);
-	mlx_hook(mlx->win, 17, 0, sl_close_window, &*mlx);
+	mlx_hook(mlx->win, 2, 0, sl_hub_keypress, mlx);
+	mlx_hook(mlx->win, 17, 0, sl_close_window, mlx);
 }

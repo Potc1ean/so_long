@@ -6,7 +6,7 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 05:23:23 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 17:38:39 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:56:39 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ int	sl_check_tile(t_prog *mlx, char tile)
 		return (sl_err2(18));
 	return (1);
 }
-

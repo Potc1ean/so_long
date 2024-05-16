@@ -6,7 +6,7 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 05:23:54 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 17:44:11 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:09:51 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	sl_errhub(int pcount, int ecount, int ccount)
 int	sl_err1(int nb)
 {
 	if (nb == 1)
-		return (0 * ft_error("Error 1 : Need only one <map.ber> as argument !\n"));
+		return (0 * ft_error("Error 1 : Need only one <map.ber> as argument\n"));
 	else if (nb == 2)
 		return (0 * ft_error("Error 2 : The map is not playable !\n"));
 	else if (nb == 3)
@@ -86,13 +86,13 @@ int	sl_err1(int nb)
 int	sl_err2(int nb)
 {
 	if (nb == 13)
-		return (0 * ft_error("Error 13 : There is no collectible on the map !\n"));
+		return (0 * ft_error("Error 13 : There is no collectible on the map\n"));
 	else if (nb == 14)
 		return (0 * ft_error("Error 14 : The map is not rectangular !\n"));
 	else if (nb == 15)
 		return (0 * ft_error("Error 15 : There is an ovni in the map !\n"));
 	else if (nb == 16)
-		return (0 * ft_error("Error 16 : You need only one spawn on the map !\n"));
+		return (0 * ft_error("Error 16 : You need only one spawn on the map\n"));
 	else if (nb == 17)
 		return (0 * ft_error("You can't leave without all collectible, "));
 	else if (nb == 18)
@@ -104,6 +104,8 @@ int	sl_err2(int nb)
 	else if (nb == 21)
 		return (0 * ft_error("Error 21 : The map is empty !\n"));
 	else if (nb == 22)
-		return (0 * ft_error("Error 22 : There is to much Exits on the map !\n"));
+		return (0 * ft_error("Error 22 : There is to much Exits on the map\n"));
+	else if (nb == 23)
+		return (0 * ft_error("Error 23 : The map is unwinabel..\n"));
 	return (0);
 }

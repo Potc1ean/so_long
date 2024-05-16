@@ -6,7 +6,7 @@
 /*   By: ichpakov <ichpakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:24:01 by ichpakov          #+#    #+#             */
-/*   Updated: 2024/04/24 22:39:04 by ichpakov         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:09:59 by ichpakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ typedef struct s_program
 	int		ynb;
 	int		x;
 	int		y;
-	int		rubis;
 	char	*stock;
+	char	**m_tmp;
 	int		fd;
 }	t_prog;
 
 typedef struct s_vstock
 {
 	char	*temp;
+	int		itmp;
 	int		pcount;
 	int		ecount;
 	int		ccount;
@@ -75,6 +76,6 @@ int		sl_err2(int nb);
 
 // sl_floodfile.c
 
-int    sl_floodfile(int y, int x,int item ,t_prog *mlx);
+int		sl_floodfile(t_prog mlx, t_vstock *vars);
 
 #endif
